@@ -6,8 +6,10 @@
     <!-- This is the template usd for all databases (persistence units) used by this project -->
     
     <!-- Remember to add your Entity Classes below -->
-    <class>entity.Role</class>
-    <class>entity.User</class>
+    <class>entity.City</class>
+    <class>entity.Country</class>
+    <class>entity.Event</class>
+    <class>entity.Genre</class>
     <properties>
       <!-- DONT ADD ANYTHING HERE
       This part will come from one of the pu_xxxx.properties files -->

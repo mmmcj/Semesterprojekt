@@ -79,7 +79,7 @@ public class DemoResource {
         String testSwappiFutureCalls = new Gson().toJson(testSwappiFutureCalls());
         return testSwappiFutureCalls;
     }
-  */  
+   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("apis")
@@ -98,21 +98,8 @@ public class DemoResource {
       }
       return res;
   }
-  
-  public String getSwappiData(int id) throws MalformedURLException, IOException{
-    URL url = new URL("https://swapi.co/api/people/"+id);
-    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-    con.setRequestMethod("GET");
-    con.setRequestProperty("Accept", "application/json;charset=UTF-8");
-    con.setRequestProperty("User-Agent", "server");
-    Scanner scan = new Scanner(con.getInputStream());
-    String jsonStr = null;
-    if (scan.hasNext()) {
-      jsonStr = scan.nextLine();
-    }
-    scan.close();
-    return jsonStr;
-  }
+  */  
+
   
 
 }
