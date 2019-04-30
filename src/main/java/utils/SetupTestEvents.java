@@ -37,8 +37,12 @@ public class SetupTestEvents {
         // CHANGE the three passwords below, before you uncomment and execute the code below
         //throw new UnsupportedOperationException("REMOVE THIS LINE, WHEN YOU HAVE READ WARNING");
         em.getTransaction().begin();
+        Genre genre1 = new Genre("sport");
+        Genre genre2 = new Genre("musik");
+        Genre genre3 = new Genre("skuespil");
+        
         Event event = new Event(new Genre("sport"), new Country("Denmark", "DK"), new City("København"), new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
-        event.setId(2);
+        //event.setId(7);
         em.persist(event);
         em.getTransaction().commit();
         
