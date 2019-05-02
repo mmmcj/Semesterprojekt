@@ -56,6 +56,14 @@ public class Event implements Serializable {
         this.endDate = endDate;
     }
 
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
     
     public Country getCountry() {
         return country;

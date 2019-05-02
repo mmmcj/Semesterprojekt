@@ -1,24 +1,8 @@
 package utils;
 
-import entity.City;
-import entity.Country;
 import entity.Event;
-import entity.Genre;
-import entity.Role;
-import entity.User;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityManager;
+import facade.Facade;
+import java.util.Collection;
 
 public class SetupTestEvents {
 
@@ -30,6 +14,17 @@ public class SetupTestEvents {
 
 
     public static void startCorrectly() {
+        Facade f = new Facade();
+        //f.createEvent("København", "Denmark", "sport", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        Collection<Event> listOfEvents = f.getEvents();
+        
+        for (Event event : listOfEvents) {
+            System.out.println(event.getCity().getCityName());
+            System.out.println(event.getEndDate());
+            System.out.println();
+        }
+        /*
+        
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
 
         // IMPORTAAAAAAAAAANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -41,6 +36,7 @@ public class SetupTestEvents {
         //event.setId(7);
         em.persist(event);
         em.getTransaction().commit();
+        */
         
     }
 

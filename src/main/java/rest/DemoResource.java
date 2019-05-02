@@ -1,14 +1,8 @@
 package rest;
 
 import entity.User;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import facade.Facade;
 import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.ws.rs.core.Context;
@@ -21,12 +15,11 @@ import javax.ws.rs.core.SecurityContext;
 import utils.PuSelector;
 
 
-/**
- * @author lam@cphbusiness.dk
- */
 @Path("info")
 public class DemoResource {
 
+    Facade f = new Facade();
+    
   @Context
   private UriInfo context;
 

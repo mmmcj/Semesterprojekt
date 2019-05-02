@@ -35,11 +35,11 @@ public class City implements Serializable {
         this.id = id;
     }
 
-    public String getCity() {
+    public String getCityName() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCityName(String city) {
         this.city = city;
     }
 
