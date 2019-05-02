@@ -4,6 +4,7 @@ import entity.City;
 import entity.Country;
 import entity.Event;
 import entity.Genre;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -83,16 +84,50 @@ public class Facade {
             em.close();
         }
     }
-    /*
+
     public Collection<Event> getEventCollection(String keyword) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+        List<Event> events = new ArrayList();
         try {
             em.getTransaction().begin();
-            Query keywordQuery = em.createQuery("SELECT r FROM ")
-                    .setParameter("city", city);
+            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.title = :title")
+                    .setParameter("title", keyword);
+            Event event = null;
+            try {
+                event = (Event) keywordQuery.getSingleResult();
+                events.add(event);
+            } catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+            }
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.city = :city")
+                    .setParameter("city", keyword);
+            try {
+                event = (Event) keywordQuery.getSingleResult();
+                events.add(event);
+            } catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+            }
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.country = :country")
+                    .setParameter("country", keyword);
+            try {
+                event = (Event) keywordQuery.getSingleResult();
+                events.add(event);
+            } catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+            }
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.genre = :genre")
+                    .setParameter("genre", keyword);
+            try {
+                event = (Event) keywordQuery.getSingleResult();
+                events.add(event);
+            } catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+            }
+
         } finally {
             em.close();
         }
+        return events;
     }
-    */
+
 }
