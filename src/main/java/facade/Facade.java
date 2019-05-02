@@ -95,7 +95,9 @@ public class Facade {
             Event event = null;
             try {
                 event = (Event) keywordQuery.getSingleResult();
-                events.add(event);
+                if (!events.contains(event)) {
+                    events.add(event);
+                }
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
@@ -103,7 +105,9 @@ public class Facade {
                     .setParameter("city", keyword);
             try {
                 event = (Event) keywordQuery.getSingleResult();
-                events.add(event);
+                if (!events.contains(event)) {
+                    events.add(event);
+                }
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
@@ -111,7 +115,9 @@ public class Facade {
                     .setParameter("country", keyword);
             try {
                 event = (Event) keywordQuery.getSingleResult();
-                events.add(event);
+                if (!events.contains(event)) {
+                    events.add(event);
+                }
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
@@ -119,7 +125,9 @@ public class Facade {
                     .setParameter("genre", keyword);
             try {
                 event = (Event) keywordQuery.getSingleResult();
-                events.add(event);
+                if (!events.contains(event)) {
+                    events.add(event);
+                }
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
