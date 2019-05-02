@@ -37,7 +37,7 @@ public class Event implements Serializable {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Genre genre;
 
-    
+    private String title;
     
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date startDate;
@@ -48,7 +48,8 @@ public class Event implements Serializable {
     public Event() {
     }
 
-    public Event(Genre genre, Country country, City city, Date startDate, Date endDate) {
+    public Event(String title, Genre genre, Country country, City city, Date startDate, Date endDate) {
+        this.title = title;
         this.genre = genre;
         this.country = country;
         this.city = city;
