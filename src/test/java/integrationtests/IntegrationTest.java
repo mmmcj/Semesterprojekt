@@ -16,7 +16,7 @@ import testutils.TestUtils;
 import utils.PuSelector;
 
 public class IntegrationTest {
-
+/*
   protected static int SERVER_PORT;
   protected static String APP_CONTEXT;
   protected static String SERVER_URL;
@@ -128,5 +128,6 @@ public class IntegrationTest {
             .get("/api/info/user").then()
             .statusCode(403);
   }
+    */
 
 }

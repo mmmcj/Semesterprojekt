@@ -85,6 +85,15 @@ public class Facade {
         }
     }
 
+    public List<Event> addtoReturnList(List<Event> evlistToreturn, List<Event> localevents) {
+        for (Event ev : localevents) {
+            if (!evlistToreturn.contains(ev)) {
+                evlistToreturn.add(ev);
+            }
+        }
+        return evlistToreturn;
+    }
+
     public Collection<Event> getEventCollection(String keyword) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         List<Event> events = new ArrayList();
@@ -92,42 +101,35 @@ public class Facade {
             em.getTransaction().begin();
             Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.title = :title")
                     .setParameter("title", keyword);
-            Event event = null;
+
             try {
-                event = (Event) keywordQuery.getSingleResult();
-                if (!events.contains(event)) {
-                    events.add(event);
-                }
+                List<Event> localevent = (List<Event>) keywordQuery.getResultList();
+                events = addtoReturnList(events, localevent);
+
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
-            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.city = :city")
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.city.city = :city")
                     .setParameter("city", keyword);
             try {
-                event = (Event) keywordQuery.getSingleResult();
-                if (!events.contains(event)) {
-                    events.add(event);
-                }
+                List<Event> localevent = (List<Event>) keywordQuery.getResultList();
+                events = addtoReturnList(events, localevent);
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
-            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.country = :country")
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.country.country = :country")
                     .setParameter("country", keyword);
             try {
-                event = (Event) keywordQuery.getSingleResult();
-                if (!events.contains(event)) {
-                    events.add(event);
-                }
+                List<Event> localevent = (List<Event>) keywordQuery.getResultList();
+                events = addtoReturnList(events, localevent);
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
-            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.genre = :genre")
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.genre.genre = :genre")
                     .setParameter("genre", keyword);
             try {
-                event = (Event) keywordQuery.getSingleResult();
-                if (!events.contains(event)) {
-                    events.add(event);
-                }
+                List<Event> localevent = (List<Event>) keywordQuery.getResultList();
+                events = addtoReturnList(events, localevent);
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }

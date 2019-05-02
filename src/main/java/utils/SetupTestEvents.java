@@ -16,7 +16,8 @@ public class SetupTestEvents {
 
     public static void startCorrectly() {
         Facade f = new Facade();
-        //f.createEvent("fodbold kamp 1234532", "København", "Denmark", "sport", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        f.createEvent("København", "København", "Denmark", "sport", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        /*
         Collection<Event> listOfEvents = f.getEvents();
         
         for (Event event : listOfEvents) {
@@ -24,7 +25,6 @@ public class SetupTestEvents {
             System.out.println(event.getEndDate());
             System.out.println();
         }
-        /*
         
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
 
