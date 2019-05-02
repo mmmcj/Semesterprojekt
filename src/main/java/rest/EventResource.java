@@ -1,63 +1,54 @@
 package rest;
 
 import com.google.gson.Gson;
-import entity.User;
+import com.google.gson.GsonBuilder;
 import facade.Facade;
-import java.util.List;
-import javax.persistence.EntityManager;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
-import utils.PuSelector;
 
 @Path("show")
-public class DemoResource {
+public class EventResource {
 
-    Facade f = new Facade();
-    Gson gson = new Gson().newBuilder().create();
-    
+    Facade facade = new Facade();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
     private UriInfo context;
 
     @Context
     SecurityContext securityContext;
-
+/*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
         return "{\"msg\":\"Hello anonymous\"}";
     }
+*/
 
     //Just to verify if the database is setup
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("events")
     public String allUsers() {
-        
-        EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
-        try {
-            List<User> users = em.createQuery("select user from User user").getResultList();
-            return "[" + users.size() + "]";
-        } finally {
-            em.close();
-        }
-
+        return gson.toJson(facade.getEvents());
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("user")
+    @Path("events/{search}")
 //  @RolesAllowed("user")
-    public String getFromUser() {
-        String thisuser = securityContext.getUserPrincipal().getName();
-        return "{\"msg\": \"Hello to User: " + thisuser + "\"}";
+    public String getFromUser(@PathParam("search") String search) {
+        return gson.toJson(facade.getEventCollection(search));
     }
 
+    /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("admin")
@@ -66,7 +57,6 @@ public class DemoResource {
         String thisuser = securityContext.getUserPrincipal().getName();
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
     }
-    /*
    @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("apis")
