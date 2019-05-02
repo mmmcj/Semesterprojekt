@@ -21,22 +21,19 @@ public class Facade {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         try {
             Query query = em.createQuery("SELECT a FROM Event AS a");
-            
+
             return query.getResultList();
         } finally {
             em.close();
         }
-        
-        
-    }
-    
 
+    }
 
     // der skal nok implementeres DTO'er 
-    public void createEvent(String city, String country, String genre, Date startDate, Date endDate) {
+    public void createEvent(String title, String city, String country, String genre, Date startDate, Date endDate) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
 
-        Event e = new Event(new Genre(genre), new Country(country), new City(city), startDate, endDate);
+        Event e = new Event(title, new Genre(genre), new Country(country), new City(city), startDate, endDate);
 
         try {
             em.getTransaction().begin();
@@ -78,8 +75,6 @@ public class Facade {
                 e.setCountry(co);
             }
 
-            
-            
             em.persist(e);
 
             em.getTransaction().commit();
@@ -88,5 +83,16 @@ public class Facade {
             em.close();
         }
     }
-
+    /*
+    public Collection<Event> getEventCollection(String keyword) {
+        EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Query keywordQuery = em.createQuery("SELECT r FROM ")
+                    .setParameter("city", city);
+        } finally {
+            em.close();
+        }
+    }
+    */
 }

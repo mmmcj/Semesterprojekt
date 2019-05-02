@@ -3,6 +3,7 @@ package utils;
 import entity.Event;
 import facade.Facade;
 import java.util.Collection;
+import java.util.Date;
 
 public class SetupTestEvents {
 
@@ -15,7 +16,7 @@ public class SetupTestEvents {
 
     public static void startCorrectly() {
         Facade f = new Facade();
-        //f.createEvent("København", "Denmark", "sport", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        //f.createEvent("fodbold kamp 1234532", "København", "Denmark", "sport", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
         Collection<Event> listOfEvents = f.getEvents();
         
         for (Event event : listOfEvents) {
