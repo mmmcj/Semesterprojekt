@@ -6,17 +6,20 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import net.minidev.json.annotate.JsonIgnore;
 
 /**
  *
@@ -44,8 +47,8 @@ public class Event implements Serializable {
     private String shortDesc;
     private String longDesc;
 
-    @OneToMany(mappedBy = "event", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-    private List<Image> images;
+    @ManyToMany(mappedBy = "events", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private List<Image> images = new ArrayList<>();
 
     private String defaultImg;
 
@@ -57,7 +60,7 @@ public class Event implements Serializable {
     public Event() {
     }
 
-    public Event(Country country, City city, Genre genre, String title, double price, String shortDesc, String longDesc, List<Image> images, String defaultImg, Date startDate, Date endDate) {
+    public Event(Country country, City city, Genre genre, String title, double price, String shortDesc, String longDesc, Image image, String defaultImg, Date startDate, Date endDate) {
         this.country = country;
         this.city = city;
         this.genre = genre;
@@ -65,7 +68,8 @@ public class Event implements Serializable {
         this.price = price;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
-        this.images = images;
+        images.add(image);
+        image.addEvent(this);
         this.defaultImg = defaultImg;
         this.startDate = startDate;
         this.endDate = endDate;

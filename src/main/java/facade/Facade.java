@@ -32,16 +32,15 @@ public class Facade {
     }
 
     // der skal nok implementeres DTO'er 
-    public void createEvent(Country country, City city, Genre genre, String title, double price, String shortDesc, String longDesc, List<Image> images, String defaultImg, Date startDate, Date endDate) {
+    public void createEvent(String country, String city, String genre, String title, double price, String shortDesc, String longDesc,Image image, String defaultImg, Date startDate, Date endDate) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         
         Event e = new Event(
-                country, city, genre, title, price, shortDesc,
-                longDesc, images, defaultImg, startDate, endDate);
+                new Country(country), new City(city), new Genre(genre), title, price, shortDesc,
+                longDesc, image, defaultImg, startDate, endDate);
                 
         try {
             em.getTransaction().begin();
-
             Query cityQuery = em.createQuery("SELECT COUNT(a) FROM City AS a WHERE a.city = :city")
                     .setParameter("city", city);
             long q1 = (long) cityQuery.getSingleResult();

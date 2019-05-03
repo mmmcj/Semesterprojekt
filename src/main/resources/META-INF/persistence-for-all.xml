@@ -10,6 +10,7 @@
     <class>entity.Country</class>
     <class>entity.Event</class>
     <class>entity.Genre</class>
+    <class>entity.Image</class>
     <properties>
       <!-- DONT ADD ANYTHING HERE
       This part will come from one of the pu_xxxx.properties files -->

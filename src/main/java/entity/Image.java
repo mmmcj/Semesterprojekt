@@ -1,11 +1,16 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlTransient;
+import net.minidev.json.annotate.JsonIgnore;
 
 /**
  *
@@ -21,20 +26,18 @@ public class Image implements Serializable {
 
     private String Img;
     
-    @ManyToOne
-    private Event event;
+    @ManyToMany
+    private List<Event> events = new ArrayList<>();
 
     
     public Image() {
     }
 
-    
+   
     public Image(String Img) {
         this.Img = Img;
     }
 
-    
-    
     public String getImg() {
         return Img;
     }
@@ -43,13 +46,14 @@ public class Image implements Serializable {
         this.Img = Img;
     }
 
-    public Event getEvent() {
-        return event;
+    public List<Event> getEvents() {
+        return events;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void addEvent(Event event) {
+        events.add(event);
     }
+
     
     
     
