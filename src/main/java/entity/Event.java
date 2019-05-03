@@ -7,11 +7,13 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,38 +29,49 @@ public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Country country;
-    
+
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private City city;
-    
+
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Genre genre;
 
     private String title;
     private double price;
-    
+    private String shortDesc;
+    private String longDesc;
+
+    @OneToMany(mappedBy = "event", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private List<Image> images;
+
+    private String defaultImg;
+
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date startDate;
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date endDate;
-    
 
     public Event() {
     }
 
-    public Event(String title, Genre genre, Country country, City city, Date startDate, Date endDate, double price) {
-        this.title = title;
-        this.genre = genre;
+    public Event(Country country, City city, Genre genre, String title, double price, String shortDesc, String longDesc, List<Image> images, String defaultImg, Date startDate, Date endDate) {
         this.country = country;
         this.city = city;
+        this.genre = genre;
+        this.title = title;
+        this.price = price;
+        this.shortDesc = shortDesc;
+        this.longDesc = longDesc;
+        this.images = images;
+        this.defaultImg = defaultImg;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.price = price;
     }
 
+    
     public double getPrice() {
         return price;
     }
@@ -67,8 +80,6 @@ public class Event implements Serializable {
         this.price = price;
     }
 
-    
-    
     public Genre getGenre() {
         return genre;
     }
@@ -77,7 +88,6 @@ public class Event implements Serializable {
         this.genre = genre;
     }
 
-    
     public Country getCountry() {
         return country;
     }
@@ -109,7 +119,7 @@ public class Event implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -142,5 +152,5 @@ public class Event implements Serializable {
     public String toString() {
         return "entity.Event[ id=" + id + " ]";
     }
-    
+
 }

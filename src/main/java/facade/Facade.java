@@ -4,6 +4,7 @@ import entity.City;
 import entity.Country;
 import entity.Event;
 import entity.Genre;
+import entity.Image;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -31,11 +32,13 @@ public class Facade {
     }
 
     // der skal nok implementeres DTO'er 
-    public void createEvent(String title, String city, String country, String genre, Date startDate, Date endDate, double price) {
+    public void createEvent(Country country, City city, Genre genre, String title, double price, String shortDesc, String longDesc, List<Image> images, String defaultImg, Date startDate, Date endDate) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
-
-        Event e = new Event(title, new Genre(genre), new Country(country), new City(city), startDate, endDate, price);
-
+        
+        Event e = new Event(
+                country, city, genre, title, price, shortDesc,
+                longDesc, images, defaultImg, startDate, endDate);
+                
         try {
             em.getTransaction().begin();
 
