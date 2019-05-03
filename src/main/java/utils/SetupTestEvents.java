@@ -16,7 +16,7 @@ public class SetupTestEvents {
 
     public static void startCorrectly() {
         Facade f = new Facade();
-        f.createEvent("København", "København", "Denmark", "sport", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        f.createEvent("København", "København", "Denmark", "sport", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 100.0);
         /*
         Collection<Event> listOfEvents = f.getEvents();
         

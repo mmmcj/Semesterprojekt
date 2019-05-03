@@ -31,10 +31,10 @@ public class Facade {
     }
 
     // der skal nok implementeres DTO'er 
-    public void createEvent(String title, String city, String country, String genre, Date startDate, Date endDate) {
+    public void createEvent(String title, String city, String country, String genre, Date startDate, Date endDate, double price) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
 
-        Event e = new Event(title, new Genre(genre), new Country(country), new City(city), startDate, endDate);
+        Event e = new Event(title, new Genre(genre), new Country(country), new City(city), startDate, endDate, price);
 
         try {
             em.getTransaction().begin();

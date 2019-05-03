@@ -13,7 +13,7 @@
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     
-    <remote.server>https://www.madsjustesen.dk/manager/text</remote.server>
+    <remote.server>https://www.mddenner.dk/manager/text</remote.server>
         
     <!--<tomcat.version>7.0.93</tomcat.version>-->
     <tomcat.version>8.5.40</tomcat.version>

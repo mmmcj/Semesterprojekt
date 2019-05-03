@@ -38,6 +38,7 @@ public class Event implements Serializable {
     private Genre genre;
 
     private String title;
+    private double price;
     
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date startDate;
@@ -48,15 +49,26 @@ public class Event implements Serializable {
     public Event() {
     }
 
-    public Event(String title, Genre genre, Country country, City city, Date startDate, Date endDate) {
+    public Event(String title, Genre genre, Country country, City city, Date startDate, Date endDate, double price) {
         this.title = title;
         this.genre = genre;
         this.country = country;
         this.city = city;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.price = price;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    
+    
     public Genre getGenre() {
         return genre;
     }
