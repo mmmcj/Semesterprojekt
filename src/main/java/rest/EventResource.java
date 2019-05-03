@@ -36,7 +36,7 @@ public class EventResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("events")
-    public String allUsers() {
+    public String allEvents() {
         return gson.toJson(facade.getEvents());
     }
 
@@ -44,7 +44,7 @@ public class EventResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("events/{search}")
 //  @RolesAllowed("user")
-    public String getFromUser(@PathParam("search") String search) {
+    public String getEventsBySearch(@PathParam("search") String search) {
         return gson.toJson(facade.getEventCollection(search));
     }
 

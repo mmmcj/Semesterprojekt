@@ -75,6 +75,46 @@ public class Event implements Serializable {
         this.endDate = endDate;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
+
+    public String getLongDesc() {
+        return longDesc;
+    }
+
+    public void setLongDesc(String longDesc) {
+        this.longDesc = longDesc;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public String getDefaultImg() {
+        return defaultImg;
+    }
+
+    public void setDefaultImg(String defaultImg) {
+        this.defaultImg = defaultImg;
+    }
+
     
     public double getPrice() {
         return price;

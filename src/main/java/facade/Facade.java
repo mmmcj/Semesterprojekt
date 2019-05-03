@@ -1,5 +1,6 @@
 package facade;
 
+import DTO.EventDTO;
 import entity.City;
 import entity.Country;
 import entity.Event;
@@ -19,12 +20,20 @@ import utils.PuSelector;
  */
 public class Facade {
 
-    public Collection<Event> getEvents() {
+    public Collection<EventDTO> getEvents() {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         try {
             Query query = em.createQuery("SELECT a FROM Event AS a");
-
-            return query.getResultList();
+            List<Event> events = (List<Event>) query.getResultList();
+            List<EventDTO> eventdtos = new ArrayList<>();
+            
+            for (Event event : events) {
+                eventdtos.add(new EventDTO(event));
+            }
+            
+            
+            
+            return eventdtos;
         } finally {
             em.close();
         }
@@ -96,7 +105,7 @@ public class Facade {
         return evlistToreturn;
     }
 
-    public Collection<Event> getEventCollection(String keyword) {
+    public Collection<EventDTO> getEventCollection(String keyword) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         List<Event> events = new ArrayList();
         try {
@@ -139,7 +148,14 @@ public class Facade {
         } finally {
             em.close();
         }
-        return events;
+        
+        List<EventDTO> dtos = new ArrayList<EventDTO>();
+        
+        for (Event event : events) {
+            dtos.add(new EventDTO(event));
+        }
+        
+        return dtos;
     }
 
 }
