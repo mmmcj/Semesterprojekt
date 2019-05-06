@@ -25,3 +25,4 @@ pu.properties
 pu_integration_test.properties
 
 /nbproject/
+nb-configuration.xml
