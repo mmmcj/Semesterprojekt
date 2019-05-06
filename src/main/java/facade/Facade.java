@@ -26,13 +26,11 @@ public class Facade {
             Query query = em.createQuery("SELECT a FROM Event AS a");
             List<Event> events = (List<Event>) query.getResultList();
             List<EventDTO> eventdtos = new ArrayList<>();
-            
+
             for (Event event : events) {
                 eventdtos.add(new EventDTO(event));
             }
-            
-            
-            
+
             return eventdtos;
         } finally {
             em.close();
@@ -41,13 +39,9 @@ public class Facade {
     }
 
     // der skal nok implementeres DTO'er 
-    public void createEvent(String country, String city, String genre, String title, double price, String shortDesc, String longDesc,Image image, String defaultImg, Date startDate, Date endDate) {
+    public void createEvent(String country, String city, String genre, String title, double price, String shortDesc, String longDesc, Image image, String defaultImg, Date startDate, Date endDate) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
-        
-        Event e = new Event(
-                new Country(country), new City(city), new Genre(genre), title, price, shortDesc,
-                longDesc, image, defaultImg, startDate, endDate);
-                
+        Event e = new Event(new Country(country), new City(city), new Genre(genre), title, price, shortDesc, longDesc, image, defaultImg, startDate, endDate);
         try {
             em.getTransaction().begin();
             Query cityQuery = em.createQuery("SELECT COUNT(a) FROM City AS a WHERE a.city = :city")
@@ -82,7 +76,6 @@ public class Facade {
                 countryQuery = em.createQuery(
                         "SELECT a FROM Country AS a WHERE a.country = :country");
                 countryQuery.setParameter("country", country);
-
                 Country co = (Country) countryQuery.getSingleResult();
                 e.setCountry(co);
             }
@@ -110,34 +103,40 @@ public class Facade {
         List<Event> events = new ArrayList();
         try {
             em.getTransaction().begin();
-            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.title = :title")
-                    .setParameter("title", keyword);
-
-            try {
-                List<Event> localevent = (List<Event>) keywordQuery.getResultList();
-                events = addtoReturnList(events, localevent);
-
-            } catch (Exception e) {
-                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
-            }
-            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.city.city = :city")
-                    .setParameter("city", keyword);
+            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.title LIKE :title")
+                    .setParameter("title", "%" + keyword + "%");
             try {
                 List<Event> localevent = (List<Event>) keywordQuery.getResultList();
                 events = addtoReturnList(events, localevent);
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
-            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.country.country = :country")
-                    .setParameter("country", keyword);
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.city.city LIKE :city")
+                    .setParameter("city", "%" + keyword + "%");
             try {
                 List<Event> localevent = (List<Event>) keywordQuery.getResultList();
                 events = addtoReturnList(events, localevent);
             } catch (Exception e) {
                 System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
             }
-            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.genre.genre = :genre")
-                    .setParameter("genre", keyword);
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.country.country LIKE :country")
+                    .setParameter("country", "%" + keyword + "%");
+            try {
+                List<Event> localevent = (List<Event>) keywordQuery.getResultList();
+                events = addtoReturnList(events, localevent);
+            } catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+            }
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.genre.genre LIKE :genre")
+                    .setParameter("genre", "%" + keyword + "%");
+            try {
+                List<Event> localevent = (List<Event>) keywordQuery.getResultList();
+                events = addtoReturnList(events, localevent);
+            } catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+            }
+            keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.shortDesc LIKE :shortDesc")
+                    .setParameter("shortDesc", "%" + keyword + "%");
             try {
                 List<Event> localevent = (List<Event>) keywordQuery.getResultList();
                 events = addtoReturnList(events, localevent);
@@ -148,13 +147,12 @@ public class Facade {
         } finally {
             em.close();
         }
-        
-        List<EventDTO> dtos = new ArrayList<EventDTO>();
-        
+        List<EventDTO> dtos = new ArrayList();
+
         for (Event event : events) {
             dtos.add(new EventDTO(event));
         }
-        
+
         return dtos;
     }
 
