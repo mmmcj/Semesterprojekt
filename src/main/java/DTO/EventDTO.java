@@ -16,13 +16,9 @@ import java.util.List;
 public class EventDTO {
 
     private Integer id;
-
     private Country country;
-
     private City city;
-
     private Genre genre;
-
     private String title;
     private double price;
     private String shortDesc;
@@ -39,6 +35,7 @@ public class EventDTO {
     }
 
     public EventDTO(Event event) {
+        this.id = event.getId();
         this.country = event.getCountry();
         this.city = event.getCity();
         this.genre = event.getGenre();
