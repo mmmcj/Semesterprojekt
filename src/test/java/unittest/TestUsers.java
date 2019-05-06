@@ -12,7 +12,7 @@ import testutils.TestUtils;
 import utils.PuSelector;
 
 public class TestUsers {
-  
+  /*
   private static UserFacade facade;
   
   @BeforeClass
@@ -37,5 +37,6 @@ public class TestUsers {
      User u = facade.getVeryfiedUser("user", "testxxxx");
      assertEquals("user", u.getUserName());
    }
+    */
   
 }
