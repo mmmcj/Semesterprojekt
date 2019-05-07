@@ -1,4 +1,4 @@
-   package rest;
+package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
+import utils.ForeignAPIs;
 
 @Path("show")
 public class EventResource {
@@ -24,13 +25,14 @@ public class EventResource {
 
     @Context
     SecurityContext securityContext;
-/*
+
+    /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
         return "{\"msg\":\"Hello anonymous\"}";
     }
-*/
+     */
 
     //Just to verify if the database is setup
     @GET
@@ -46,6 +48,14 @@ public class EventResource {
 //  @RolesAllowed("user")
     public String getEventsBySearch(@PathParam("search") String search) {
         return gson.toJson(facade.getEventCollection(search));
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("flights/{search}")
+//  @RolesAllowed("user")
+    public String getFlightsByDate(@PathParam("search") String search) throws Exception {
+        return ForeignAPIs.getFlights(search);
     }
 
     /*
@@ -84,5 +94,4 @@ public class EventResource {
       return res;
   }
      */
-
 }
