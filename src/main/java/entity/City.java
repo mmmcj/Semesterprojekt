@@ -19,6 +19,8 @@ public class City implements Serializable {
     private Integer id;
 
     private String city;
+    private double latti, longti;
+    
 
     public City() {
     }
@@ -43,6 +45,23 @@ public class City implements Serializable {
         this.city = city;
     }
 
+    public double getLatti() {
+        return latti;
+    }
+
+    public void setLatti(double latti) {
+        this.latti = latti;
+    }
+
+    public double getLongti() {
+        return longti;
+    }
+
+    public void setLongti(double longti) {
+        this.longti = longti;
+    }
+    
+    
     
     
     @Override
