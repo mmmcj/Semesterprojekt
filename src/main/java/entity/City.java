@@ -19,12 +19,16 @@ public class City implements Serializable {
     private Integer id;
 
     private String city;
+    private double longitude;
+    private double lattitude;
 
     public City() {
     }
 
-    public City(String city) {
+    public City(String city, double longitude, double lattitude) {
         this.city = city;
+        this.longitude = longitude;
+        this.lattitude = lattitude;
     }
 
     public Integer getId() {
