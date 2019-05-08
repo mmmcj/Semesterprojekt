@@ -6,6 +6,7 @@ import entity.Genre;
 import entity.Image;
 import facade.Facade;
 import java.util.Date;
+import javax.persistence.Persistence;
 
 public class SetupTestEvents {
 
@@ -17,7 +18,11 @@ public class SetupTestEvents {
 
 
     public static void startCorrectly() {
-        Facade f = new Facade();
+        Persistence.generateSchema("pu", null);
+        
+        
+        
+        /*Facade f = new Facade();
         
         f.createEvent(
                 "Denmark",
@@ -31,7 +36,7 @@ public class SetupTestEvents {
                 "someImageUrl.com/image/2",
                 new Date(System.currentTimeMillis()),
                 new Date(System.currentTimeMillis()));
-        /*
+        
         Collection<Event> listOfEvents = f.getEvents();
         
         for (Event event : listOfEvents) {

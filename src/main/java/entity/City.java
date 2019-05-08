@@ -19,7 +19,7 @@ public class City implements Serializable {
     private Integer id;
 
     private String city;
-    private double latti, longti;
+    private double lattitude, longitude;
     
 
     public City() {
@@ -45,20 +45,20 @@ public class City implements Serializable {
         this.city = city;
     }
 
-    public double getLatti() {
-        return latti;
+    public double getLattitude() {
+        return lattitude;
     }
 
-    public void setLatti(double latti) {
-        this.latti = latti;
+    public void setLattitude(double lattitude) {
+        this.lattitude = lattitude;
     }
 
-    public double getLongti() {
-        return longti;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLongti(double longti) {
-        this.longti = longti;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
     
     

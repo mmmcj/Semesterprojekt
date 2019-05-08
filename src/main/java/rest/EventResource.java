@@ -47,6 +47,8 @@ public class EventResource {
     public String getEventsBySearch(@PathParam("search") String search) {
         return gson.toJson(facade.getEventCollection(search));
     }
+    
+
 
     /*
     @GET
