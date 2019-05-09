@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import utils.PuSelector;
+import utils.Calculator;
 
 /**
  *
@@ -154,6 +155,51 @@ public class Facade {
         }
 
         return dtos;
+    }
+    
+    //This method finds all the events within a certain area of a location
+    //The Calculator is code that we found online which helps with calculating the distance between 2 location points.
+    
+    public List<EventDTO> getEventsByLocation(double latittude, double longitude, int distance){
+        EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+        List<EventDTO> dto = new ArrayList();
+        List<City> citiesToFindEventsFrom = new ArrayList();
+        List<Event> finalEvents = new ArrayList();
+       try{
+        em.getTransaction().begin();
+            Query cityQuery = em.createQuery("SELECT r From City");
+            List<City> citylist = (List<City>) cityQuery.getResultList();
+       try{
+         }
+         catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+         } 
+       
+       citylist.forEach((city) -> {     
+           int res = Calculator.calculateDistance(latittude, longitude, city.getLattitude(), city.getLongitude());
+                if (res<distance) {
+                    citiesToFindEventsFrom.add(city);
+                }
+            });
+       citiesToFindEventsFrom.forEach((city) -> {
+           Query cityEventsQuery = em.createQuery("SELECT r FROM Event r WHERE r.city.id LIKE :id")
+                    .setParameter("id", city.getId());
+            try {
+                List<Event> localevent = (List<Event>) cityEventsQuery.getResultList();
+                finalEvents.addAll(localevent);
+            } catch (Exception e) {
+                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+            }
+       });
+       }finally{
+           em.close();
+       }
+
+       finalEvents.forEach((event) -> {
+           dto.add(new EventDTO(event));
+        });
+        
+        return dto;
     }
 
 }

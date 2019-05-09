@@ -19,6 +19,8 @@ public class City implements Serializable {
     private Integer id;
 
     private String city;
+    private double lattitude, longitude;
+    
 
     public City() {
     }
@@ -41,6 +43,21 @@ public class City implements Serializable {
 
     public void setCityName(String city) {
         this.city = city;
+    }
+        public double getLattitude() {
+        return lattitude;
+    }
+
+    public void setLattitude(double lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     
