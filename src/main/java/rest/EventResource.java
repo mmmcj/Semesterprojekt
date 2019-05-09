@@ -1,5 +1,6 @@
 package rest;
 
+import DTO.EventDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.Flight;
@@ -55,7 +56,7 @@ public class EventResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("events/{lattitude}/{longitude}/{distance}")
-    public String getEventsByLocation(@PathParam("lattitude")  String lattitude,@PathParam("longtitude")String longitude , @PathParam("distance") String distance){
+    public String getEventsByLocation(@PathParam("lattitude") String lattitude, @PathParam("longitude")String longitude , @PathParam("distance") String distance){
         return gson.toJson(facade.getEventsByLocation(Double.valueOf(lattitude), Double.valueOf(longitude), Integer.valueOf(distance)));
     }
 
