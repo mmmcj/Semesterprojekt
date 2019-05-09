@@ -51,6 +51,12 @@ public class EventResource {
     public String getEventsBySearch(@PathParam("search") String search) {
         return gson.toJson(facade.getEventCollection(search));
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getEventsByLocation(@PathParam("longtitude") double longitude,@PathParam("lattitude") double lattitude, @PathParam("distance") int distance){
+        return gson.toJson(facade.getEventsByLocation(lattitude, longitude, distance));
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
