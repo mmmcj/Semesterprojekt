@@ -64,10 +64,7 @@ public class EventResource {
     @Path("flights/{date}/{userLat}/{userLong}/{eventLat}/{eventLong}")
 //  @RolesAllowed("user")
     public String getFlightsByDate(@PathParam("date") String date, @PathParam("userLat") String userLat, @PathParam("userLong") String userLong, @PathParam("eventLat") String eventLat, @PathParam("eventLong") String eventLong) throws Exception {
-        System.out.println(Double.valueOf(userLat));
-        List<Flight> list = ForeignAPIs.getFlights(date, Double.valueOf(userLat), Double.valueOf(userLong), Double.valueOf(eventLat), Double.valueOf(eventLong));
-        System.out.println(list.size());
-        return null; //gson.toJson(list);
+        return gson.toJson(ForeignAPIs.getFlights(date, Double.valueOf(userLat), Double.valueOf(userLong), Double.valueOf(eventLat), Double.valueOf(eventLong)));
     }
 
     /*

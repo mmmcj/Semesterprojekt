@@ -44,6 +44,9 @@ public class ForeignAPIs {
         return flights;
     }
     
+    public static void main(String[] args) throws Exception {
+    }
+    
     public static List<Flight> getFlights(String date, double startLat, double startLong, double endLat, double endLong) throws Exception {
         Flight[] flights = callApi(date);
         List<Flight> sortedFlights = new ArrayList();
@@ -51,9 +54,14 @@ public class ForeignAPIs {
         for (Flight flight : flights) {
             String[] startAiportCoord = flight.getCordiStart().split("/");
             String[] endAirportCoord = flight.getCordiEnd().split("/");
+
+            flight.setStartLat(Double.valueOf(startAiportCoord[0]));
+            flight.setStartLong(Double.valueOf(startAiportCoord[1]));
+            flight.setEndLat(Double.valueOf(endAirportCoord[0]));
+            flight.setEndLong(Double.valueOf(endAirportCoord[1]));
             
-            int distUserToAirport = Calculator.calculateDistance(startLat, startLong, Double.valueOf(startAiportCoord[0]), Double.valueOf(startAiportCoord[1]));
-            int distAirportToEvent = Calculator.calculateDistance(Double.valueOf(endAirportCoord[0]), Double.valueOf(endAirportCoord[1]), endLat, endLong);
+            int distUserToAirport = Calculator.calculateDistance(startLat, startLong, flight.getStartLat(), flight.getStartLong());
+            int distAirportToEvent = Calculator.calculateDistance(flight.getEndLat(), flight.getEndLong(), endLat, endLong);
             int totalDist = distUserToAirport + distAirportToEvent;
             flight.setTotalDistance(totalDist);
             sortedFlights.add(flight);

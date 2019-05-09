@@ -167,7 +167,7 @@ public class Facade {
         List<Event> finalEvents = new ArrayList();
        try{
         em.getTransaction().begin();
-            Query cityQuery = em.createQuery("SELECT r From City");
+            Query cityQuery = em.createQuery("SELECT r From City r");
             List<City> citylist = (List<City>) cityQuery.getResultList();
        try{
          }

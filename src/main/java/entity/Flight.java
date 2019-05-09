@@ -21,6 +21,7 @@ public class Flight {
     private String airline;
     private double price;
     private String cordiStart, cordiEnd;
+    private double startLat, startLong, endLat, endLong;
     private int totalDistance;
 
     public int getId() {
@@ -134,9 +135,39 @@ public class Flight {
     public void setTotalDistance(int totalDistance) {
         this.totalDistance = totalDistance;
     }
-    
-    
 
+    public double getStartLat() {
+        return startLat;
+    }
+
+    public void setStartLat(double startLat) {
+        this.startLat = startLat;
+    }
+
+    public double getStartLong() {
+        return startLong;
+    }
+
+    public void setStartLong(double startLong) {
+        this.startLong = startLong;
+    }
+
+    public double getEndLat() {
+        return endLat;
+    }
+
+    public void setEndLat(double endLat) {
+        this.endLat = endLat;
+    }
+
+    public double getEndLong() {
+        return endLong;
+    }
+
+    public void setEndLong(double endLong) {
+        this.endLong = endLong;
+    }
+    
     
 
 }
