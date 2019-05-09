@@ -2,7 +2,9 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entity.Flight;
 import facade.Facade;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -52,10 +54,13 @@ public class EventResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("flights/{search}")
+    @Path("flights/{date}/{userLat}/{userLong}/{eventLat}/{eventLong}")
 //  @RolesAllowed("user")
-    public String getFlightsByDate(@PathParam("search") String search) throws Exception {
-        return ForeignAPIs.getFlights(search);
+    public String getFlightsByDate(@PathParam("date") String date, @PathParam("userLat") String userLat, @PathParam("userLong") String userLong, @PathParam("eventLat") String eventLat, @PathParam("eventLong") String eventLong) throws Exception {
+        System.out.println(Double.valueOf(userLat));
+        List<Flight> list = ForeignAPIs.getFlights(date, Double.valueOf(userLat), Double.valueOf(userLong), Double.valueOf(eventLat), Double.valueOf(eventLong));
+        System.out.println(list.size());
+        return null; //gson.toJson(list);
     }
 
     /*
