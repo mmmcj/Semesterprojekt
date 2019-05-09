@@ -1,8 +1,10 @@
-   package rest;
+package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entity.Flight;
 import facade.Facade;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -12,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
+import utils.ForeignAPIs;
 
 @Path("show")
 public class EventResource {
@@ -24,13 +27,14 @@ public class EventResource {
 
     @Context
     SecurityContext securityContext;
-/*
+
+    /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
         return "{\"msg\":\"Hello anonymous\"}";
     }
-*/
+     */
 
     //Just to verify if the database is setup
     @GET
@@ -53,6 +57,17 @@ public class EventResource {
     @Path("events/{lattitude}/{longitude}/{distance}")
     public String getEventsByLocation(@PathParam("lattitude")  String lattitude,@PathParam("longtitude")String longitude , @PathParam("distance") String distance){
         return gson.toJson(facade.getEventsByLocation(Double.valueOf(lattitude), Double.valueOf(longitude), Integer.valueOf(distance)));
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("flights/{date}/{userLat}/{userLong}/{eventLat}/{eventLong}")
+//  @RolesAllowed("user")
+    public String getFlightsByDate(@PathParam("date") String date, @PathParam("userLat") String userLat, @PathParam("userLong") String userLong, @PathParam("eventLat") String eventLat, @PathParam("eventLong") String eventLong) throws Exception {
+        System.out.println(Double.valueOf(userLat));
+        List<Flight> list = ForeignAPIs.getFlights(date, Double.valueOf(userLat), Double.valueOf(userLong), Double.valueOf(eventLat), Double.valueOf(eventLong));
+        System.out.println(list.size());
+        return null; //gson.toJson(list);
     }
 
     /*
@@ -91,5 +106,4 @@ public class EventResource {
       return res;
   }
      */
-
 }
