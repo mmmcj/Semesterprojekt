@@ -50,8 +50,9 @@ public class EventResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getEventsByLocation(@PathParam("longtitude") double longitude,@PathParam("lattitude") double lattitude, @PathParam("distance") int distance){
-        return gson.toJson(facade.getEventsByLocation(lattitude, longitude, distance));
+    @Path("events/{lattitude}/{longitude}/{distance}")
+    public String getEventsByLocation(@PathParam("lattitude")  String lattitude,@PathParam("longtitude")String longitude , @PathParam("distance") String distance){
+        return gson.toJson(facade.getEventsByLocation(Double.valueOf(lattitude), Double.valueOf(longitude), Integer.valueOf(distance)));
     }
 
     /*
