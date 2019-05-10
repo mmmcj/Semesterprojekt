@@ -169,11 +169,7 @@ public class Facade {
         em.getTransaction().begin();
             Query cityQuery = em.createQuery("SELECT r From City r");
             List<City> citylist = (List<City>) cityQuery.getResultList();
-       try{
-         }
-         catch (Exception e) {
-                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
-         } 
+
        
        citylist.forEach((city) -> {     
            int res = Calculator.calculateDistance(latittude, longitude, city.getLattitude(), city.getLongitude());
@@ -200,6 +196,20 @@ public class Facade {
         });
         
         return dto;
+    }
+
+    public EventDTO getSpecificEvent(int id) {
+        EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+        EventDTO res = new EventDTO(); 
+        try{
+        em.getTransaction().begin();
+             Query Query = em.createQuery("SELECT r FROM Event r WHERE r.id LIKE :id")
+                    .setParameter("id", id);
+            res.equals(Query.getFirstResult());
+       }finally{
+           em.close();
+       }
+        return res;
     }
     
 
