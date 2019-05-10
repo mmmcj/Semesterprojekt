@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ForeignAPIs {
 
-    public static final String FLIGHT_URL = "https://magnusklitmose.com/Flights-1.0/api/flight/country/date/Denmark/Norway/";
+    public static final String FLIGHT_URL = "https://magnusklitmose.com/Flights-1.0/api/flight/date/all/";
 
     public static Flight[] callApi(String date) throws Exception {
         URL url = new URL(FLIGHT_URL + date);
@@ -44,12 +44,10 @@ public class ForeignAPIs {
         return flights;
     }
     
-    public static void main(String[] args) throws Exception {
-    }
-    
     public static List<Flight> getFlights(String date, double startLat, double startLong, double endLat, double endLong) throws Exception {
         Flight[] flights = callApi(date);
         List<Flight> sortedFlights = new ArrayList();
+        List<Flight> returnFlights = new ArrayList();
         
         for (Flight flight : flights) {
             String[] startAiportCoord = flight.getCordiStart().split("/");
@@ -70,24 +68,12 @@ public class ForeignAPIs {
         
         sortedFlights.sort(Comparator.comparing(Flight::getTotalDistance));
         
-        for (Flight sortedFlight : sortedFlights) {
-            System.out.println(sortedFlight.getTotalDistance());
+        for (int i = 0; i < 5; i++) {
+            returnFlights.add(sortedFlights.get(i));
         }
         
         
-        return sortedFlights;
-    }
-
-    public static Date convertToDateFromString(String startDate) throws Exception {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d-M-yyyy");
-        java.util.Date date = simpleDateFormat.parse(startDate);
-        Date sqlStartDate = new Date(date.getTime());
-        return sqlStartDate;
-    }
-
-    public static String converToStringFromDate(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d-M-yyyy");
-        return simpleDateFormat.format(date);
+        return returnFlights;
     }
     
 
