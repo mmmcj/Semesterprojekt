@@ -36,7 +36,6 @@ public class EventResource {
         return "{\"msg\":\"Hello anonymous\"}";
     }
      */
-
     //Just to verify if the database is setup
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -47,21 +46,30 @@ public class EventResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("events/random/{number}")
+    public String getNumberOfRandomEvents(@PathParam("number") int number) {
+        return gson.toJson(facade.getRandomEvents(number));
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("events/{search}")
 //  @RolesAllowed("user")
     public String getEventsBySearch(@PathParam("search") String search) {
         return gson.toJson(facade.getEventCollection(search));
     }
+
     @GET
     @Produces
     @Path("eventSingle/{id}")
     public String getSpecificEvent(@PathParam("id") String id){
         return gson.toJson(facade.getSpecificEvent(Integer.valueOf(id)));
     }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("events/{lattitude}/{longitude}/{distance}")
-    public String getEventsByLocation(@PathParam("lattitude") String lattitude, @PathParam("longitude")String longitude , @PathParam("distance") String distance){
+    public String getEventsByLocation(@PathParam("lattitude") String lattitude, @PathParam("longitude") String longitude, @PathParam("distance") String distance) {
         return gson.toJson(facade.getEventsByLocation(Double.valueOf(lattitude), Double.valueOf(longitude), Integer.valueOf(distance)));
     }
     
