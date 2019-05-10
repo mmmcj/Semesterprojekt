@@ -8,6 +8,7 @@ import entity.Genre;
 import entity.Image;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -37,6 +38,16 @@ public class Facade {
             em.close();
         }
 
+    }
+    
+    public List<EventDTO> getRandomEvents(int numberOfEvents) {
+        List<EventDTO> events = (List) getEvents();
+        List<EventDTO> returnEvents = new ArrayList();
+        Collections.shuffle(events);
+        for (int i = 0; i < numberOfEvents; i++) {
+            returnEvents.add(events.get(i));
+        }
+        return returnEvents;
     }
 
     // der skal nok implementeres DTO'er 
