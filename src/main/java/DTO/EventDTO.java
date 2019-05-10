@@ -8,6 +8,7 @@ import entity.Image;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import utils.ConverterUtils;
 
 /**
  *
@@ -28,8 +29,8 @@ public class EventDTO {
 
     private String defaultImg;
 
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
 
     public EventDTO() {
     }
@@ -49,8 +50,8 @@ public class EventDTO {
         this.shortDesc = event.getShortDesc();
         this.longDesc = event.getLongDesc();
         this.defaultImg = event.getDefaultImg();
-        this.startDate = event.getStartDate();
-        this.endDate = event.getEndDate();
+        this.startDate = ConverterUtils.converToStringFromDate(event.getStartDate());
+        this.endDate = ConverterUtils.converToStringFromDate(event.getEndDate());
     }
 
 }
