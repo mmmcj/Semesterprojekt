@@ -1,11 +1,13 @@
 package rest;
 
+import DTO.EventDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import facade.Facade;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
@@ -61,18 +63,18 @@ public class EventResource {
     public String getEventsBySpecificDate(@PathParam("date") String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date;
-        String stacktrace = "";
         try {
             date = sdf.parse(dateStr);
+            List<EventDTO> eventCollectionBySpecificDate = facade.getEventCollectionBySpecificDate(date);
+            if (!eventCollectionBySpecificDate.isEmpty()) {
+                return gson.toJson(eventCollectionBySpecificDate);
+            } else {
+                return gson.toJson("No Occurences on Date.");
+            }
         } catch (ParseException ex) {
             Logger.getLogger(EventResource.class.getName()).log(Level.SEVERE, null, ex);
-            date = null;
-            stacktrace = ex.getLocalizedMessage();
+            return gson.toJson("Incorrect Date  Format: " + ex.getLocalizedMessage());
         }
-        if (date == null || dateStr.isEmpty()) {
-            return gson.toJson(Response.status(404, "Incorrect Format: " + stacktrace).build());
-        }
-        return gson.toJson(facade.getEventCollectionBySpecificDate(date));
     }
     /*
     @GET
