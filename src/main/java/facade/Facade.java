@@ -41,7 +41,7 @@ public class Facade {
     // der skal nok implementeres DTO'er 
     public void createEvent(String country, String city, String genre, String title, double price, String shortDesc, String longDesc, Image image, String defaultImg, Date startDate, Date endDate) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
-        Event e = new Event(new Country(country), new City(city, 20.2,50.5), new Genre(genre), title, price, shortDesc, longDesc, image, defaultImg, startDate, endDate);
+        Event e = new Event(new Country(country), new City(city, 20.2, 50.5), new Genre(genre), title, price, shortDesc, longDesc, image, defaultImg, startDate, endDate);
         try {
             em.getTransaction().begin();
             Query cityQuery = em.createQuery("SELECT COUNT(a) FROM City AS a WHERE a.city = :city")
@@ -96,6 +96,24 @@ public class Facade {
             }
         }
         return evlistToreturn;
+    }
+
+    public List<EventDTO> getEventCollectionBySpecificDate(Date date) {
+        EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+        List<Event> events;
+        try {
+            em.getTransaction().begin();
+            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.startDate = :startdate")
+                    .setParameter("startdate", date);
+            events = (List<Event>) keywordQuery.getResultList();
+        } finally {
+            em.close();
+        }
+        List<EventDTO> eventDTOList = new ArrayList();
+        events.stream().forEach(event -> {
+            eventDTOList.add(new EventDTO(event));
+        });
+        return eventDTOList;
     }
 
     public Collection<EventDTO> getEventCollection(String keyword) {

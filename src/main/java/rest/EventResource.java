@@ -1,8 +1,13 @@
-   package rest;
+package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import facade.Facade;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -11,6 +16,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
 @Path("show")
@@ -24,14 +31,14 @@ public class EventResource {
 
     @Context
     SecurityContext securityContext;
-/*
+
+    /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
         return "{\"msg\":\"Hello anonymous\"}";
     }
-*/
-
+     */
     //Just to verify if the database is setup
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,6 +55,25 @@ public class EventResource {
         return gson.toJson(facade.getEventCollection(search));
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("eventsdate/{date}")
+    public String getEventsBySpecificDate(@PathParam("date") String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        String stacktrace = "";
+        try {
+            date = sdf.parse(dateStr);
+        } catch (ParseException ex) {
+            Logger.getLogger(EventResource.class.getName()).log(Level.SEVERE, null, ex);
+            date = null;
+            stacktrace = ex.getLocalizedMessage();
+        }
+        if (date == null || dateStr.isEmpty()) {
+            return gson.toJson(Response.status(404, "Incorrect Format: " + stacktrace).build());
+        }
+        return gson.toJson(facade.getEventCollectionBySpecificDate(date));
+    }
     /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
