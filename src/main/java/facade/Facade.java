@@ -211,16 +211,17 @@ public class Facade {
 
     public EventDTO getSpecificEvent(int id) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
-        EventDTO res = new EventDTO(); 
+         
+        Event e = new Event();
         try{
         em.getTransaction().begin();
-             Query Query = em.createQuery("SELECT r FROM Event r WHERE r.id LIKE :id")
+             Query query = em.createQuery("SELECT r FROM Event r WHERE r.id = :id")
                     .setParameter("id", id);
-            res.equals(Query.getFirstResult());
+            e = (Event) query.getSingleResult();
        }finally{
            em.close();
        }
-        return res;
+        return new EventDTO(e);
     }
     
 

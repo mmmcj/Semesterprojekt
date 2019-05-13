@@ -63,7 +63,8 @@ public class EventResource {
     @Produces
     @Path("eventSingle/{id}")
     public String getSpecificEvent(@PathParam("id") String id){
-        return gson.toJson(facade.getSpecificEvent(Integer.valueOf(id)));
+        int nid = Integer.valueOf(id);
+        return gson.toJson(facade.getSpecificEvent(nid));
     }
 
     @GET
