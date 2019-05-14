@@ -4,14 +4,12 @@ import DTO.EventDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import facade.Facade;
-<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import java.text.ParseException;
@@ -93,20 +91,6 @@ public class EventResource {
     public String getFlightsByDate(@PathParam("date") String date, @PathParam("userLat") String userLat, @PathParam("userLong") String userLong, @PathParam("eventLat") String eventLat, @PathParam("eventLong") String eventLong) throws Exception {
         return gson.toJson(ForeignAPIs.getFlights(date, Double.valueOf(userLat), Double.valueOf(userLong), Double.valueOf(eventLat), Double.valueOf(eventLong)));
     }
-
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("eventsdate/{date}")
-//    public String getEventsBySpecificDate(@PathParam("date") String dateStr) {
-//        Date date = ConverterUtils.convertFromJsonDateToDate(dateStr);
-//        System.out.println(date);
-//        List<EventDTO> eventCollectionBySpecificDate = facade.getEventCollectionBySpecificDate(date);
-//        if (!eventCollectionBySpecificDate.isEmpty()) {
-//            return gson.toJson(eventCollectionBySpecificDate);
-//        } else {
-//            return gson.toJson("No Occurences on Date.");
-//        }
-//    }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
