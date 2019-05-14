@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
  * @author Plaul
  */
 @Entity
-@Table(name = "roles")
+@Table(name = "ROLES")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;

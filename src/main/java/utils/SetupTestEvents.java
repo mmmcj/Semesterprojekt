@@ -4,6 +4,7 @@ import entity.City;
 import entity.Country;
 import entity.Genre;
 import entity.Image;
+import entity.User;
 import facade.Facade;
 import java.util.Date;
 import javax.persistence.EntityManager;
@@ -11,13 +12,17 @@ import javax.persistence.EntityManager;
 public class SetupTestEvents {
 
     public static void main(String[] args) {
-        //EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+//        EntityManager em = PuSelector.getEntityManagerFactory("pu_production").createEntityManager();
         //testSwappiFutureCalls();
         startCorrectly();
     }
 
 
     public static void startCorrectly() {
+        
+//        User u = new User("somename", "pw");
+//        System.out.println(u.getUserPass());
+        
 //        Facade f = new Facade();
 //        
 //        f.createEvent(
