@@ -1,35 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
- * @author Mark
+ * @author Jesper
  */
 @Entity
-public class City implements Serializable {
+public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private String city;
-    private double longitude;
-    private double lattitude;
-
-    public City() {
-    }
-
-    public City(String city, double longitude, double lattitude) {
-        this.city = city;
-        this.longitude = longitude;
-        this.lattitude = lattitude;
-    }
+    private Date buyDateTime;
+    private User user;
+    @OneToOne
+    private Event event;
 
     public Integer getId() {
         return id;
@@ -39,30 +40,21 @@ public class City implements Serializable {
         this.id = id;
     }
 
-    public String getCityName() {
-        return city;
+    public Date getBuyDateTime() {
+        return buyDateTime;
     }
 
-    public void setCityName(String city) {
-        this.city = city;
-    }
-        public double getLattitude() {
-        return lattitude;
+    public void setBuyDateTime(Date buyDateTime) {
+        this.buyDateTime = buyDateTime;
     }
 
-    public void setLattitude(double lattitude) {
-        this.lattitude = lattitude;
+    public User getUser() {
+        return user;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-
 
     @Override
     public int hashCode() {
@@ -74,10 +66,10 @@ public class City implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof City)) {
+        if (!(object instanceof Order)) {
             return false;
         }
-        City other = (City) object;
+        Order other = (Order) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -86,7 +78,7 @@ public class City implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.City[ id=" + id + " ]";
+        return "entity.Orders[ id=" + id + " ]";
     }
-
+    
 }
