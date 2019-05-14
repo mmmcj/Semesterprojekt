@@ -110,25 +110,6 @@ public class Facade {
         return evlistToreturn;
     }
 
-    public List<EventDTO> getEventCollectionBySpecificDate(Date date) {
-        EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
-        List<Event> events;
-        long timeAdjuster = 24 * 60 * 60 * 1000;
-        try {
-            em.getTransaction().begin();
-            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.startDate BETWEEN :startdate AND :enddate")
-                    .setParameter("startdate", date).setParameter("enddate", new Date(date.getTime() + timeAdjuster));
-            events = (List<Event>) keywordQuery.getResultList();
-        } finally {
-            em.close();
-        }
-        List<EventDTO> eventDTOList = new ArrayList();
-        events.stream().forEach(event -> {
-            eventDTOList.add(new EventDTO(event));
-        });
-        return eventDTOList;
-    }
-
     public Collection<EventDTO> getEventCollection(String keyword) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         List<Event> events = new ArrayList();

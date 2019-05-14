@@ -11,8 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-=======
->>>>>>> 3e363606dfe9c3abeab7cc22366e8878f47be764
+
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import java.text.ParseException;
@@ -86,10 +85,6 @@ public class EventResource {
     public String getEventsByLocation(@PathParam("lattitude") String lattitude, @PathParam("longitude") String longitude, @PathParam("distance") String distance) {
         return gson.toJson(facade.getEventsByLocation(Double.valueOf(lattitude), Double.valueOf(longitude), Integer.valueOf(distance)));
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 3e363606dfe9c3abeab7cc22366e8878f47be764
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -99,7 +94,6 @@ public class EventResource {
         return gson.toJson(ForeignAPIs.getFlights(date, Double.valueOf(userLat), Double.valueOf(userLong), Double.valueOf(eventLat), Double.valueOf(eventLong)));
     }
 
-<<<<<<< HEAD
 //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)
 //    @Path("eventsdate/{date}")
@@ -115,8 +109,6 @@ public class EventResource {
 //    }
     
     @GET
-=======
->>>>>>> 3e363606dfe9c3abeab7cc22366e8878f47be764
     @Produces(MediaType.APPLICATION_JSON)
     @Path("eventsdate/{date}")
     public String getEventsBySpecificDate(@PathParam("date") String dateStr) {
