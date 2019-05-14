@@ -91,25 +91,18 @@ public class EventResource {
     public String getFlightsByDate(@PathParam("date") String date, @PathParam("userLat") String userLat, @PathParam("userLong") String userLong, @PathParam("eventLat") String eventLat, @PathParam("eventLong") String eventLong) throws Exception {
         return gson.toJson(ForeignAPIs.getFlights(date, Double.valueOf(userLat), Double.valueOf(userLong), Double.valueOf(eventLat), Double.valueOf(eventLong)));
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("eventsdate/{date}")
     public String getEventsBySpecificDate(@PathParam("date") String dateStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date;
-        try {
-            date = sdf.parse(dateStr);
-            List<EventDTO> eventCollectionBySpecificDate = facade.getEventCollectionBySpecificDate(date);
-            if (!eventCollectionBySpecificDate.isEmpty()) {
-                return gson.toJson(eventCollectionBySpecificDate);
-            } else {
-                return gson.toJson("No Occurences on Date.");
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(EventResource.class.getName()).log(Level.SEVERE, null, ex);
-            return gson.toJson("Incorrect Date  Format: " + ex.getLocalizedMessage());
+        List<EventDTO> eventCollectionBySpecificDate = facade.getEventsBySpecificDate(ConverterUtils.convertFromJsonDateToDate(dateStr));
+        if (!eventCollectionBySpecificDate.isEmpty()) {
+            return gson.toJson(eventCollectionBySpecificDate);
+        } else {
+            return gson.toJson("No Occurences on Date.");
         }
+
     }
 
     /*

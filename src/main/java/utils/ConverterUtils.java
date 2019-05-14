@@ -53,9 +53,4 @@ public class ConverterUtils {
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
     }
-
-    public static void main(String[] args) throws Exception {
-        System.out.println(convertFromJsonDateToDate("2019-11-23T09:33:30.000Z"));
-        System.out.println(convertToDateFromString("23-11-2019"));
-    }
 }

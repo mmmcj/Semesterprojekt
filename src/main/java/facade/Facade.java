@@ -6,6 +6,8 @@ import entity.Country;
 import entity.Event;
 import entity.Genre;
 import entity.Image;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,8 +15,10 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import utils.PuSelector;
 import utils.Calculator;
+import utils.ConverterUtils;
 
 /**
  *
@@ -222,14 +226,16 @@ public class Facade {
         return new EventDTO(e);
     }
 
-    public List<EventDTO> getEventCollectionBySpecificDate(Date date) {
+    public List<EventDTO> getEventsBySpecificDate(Date date) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+
         List<Event> events;
-        long timeAdjuster = 24 * 60 * 60 * 1000;
+
         try {
             em.getTransaction().begin();
-            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.startDate BETWEEN :startdate AND :enddate")
-                    .setParameter("startdate", date).setParameter("enddate", new Date(date.getTime() + timeAdjuster));
+            System.out.println(date);
+            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.startDate = :startdate")
+                    .setParameter("startdate", date, TemporalType.TIMESTAMP);
             events = (List<Event>) keywordQuery.getResultList();
         } finally {
             em.close();

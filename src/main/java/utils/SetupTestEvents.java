@@ -6,31 +6,32 @@ import entity.Genre;
 import entity.Image;
 import facade.Facade;
 import java.util.Date;
+import javax.persistence.EntityManager;
 
 public class SetupTestEvents {
 
     public static void main(String[] args) {
-        
+        //EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         //testSwappiFutureCalls();
         startCorrectly();
     }
 
 
     public static void startCorrectly() {
-        Facade f = new Facade();
-        
-        f.createEvent(
-                "Denmark",
-                "København",
-                "Sport",
-                "Typisk FCK vs Brøndby kamp",
-                250.0,
-                "hold dig indedøre",
-                "FCK mod brøndby... Dette skulle være en lang description",
-                new Image("someUrl.com"), // img object
-                "someImageUrl.com/image/2",
-                new Date(System.currentTimeMillis()),
-                new Date(System.currentTimeMillis()));
+//        Facade f = new Facade();
+//        
+//        f.createEvent(
+//                "Denmark",
+//                "København",
+//                "Sport",
+//                "Typisk FCK vs Brøndby kamp",
+//                250.0,
+//                "hold dig indedøre",
+//                "FCK mod brøndby... Dette skulle være en lang description",
+//                new Image("someUrl.com"), // img object
+//                "someImageUrl.com/image/2",
+//                new Date(System.currentTimeMillis()),
+//                new Date(System.currentTimeMillis()));
         /*
         Collection<Event> listOfEvents = f.getEvents();
         

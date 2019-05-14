@@ -27,7 +27,7 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Date buyDateTime;
+    @OneToOne
     private User user;
     @OneToOne
     private Event event;
@@ -38,14 +38,6 @@ public class Order implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getBuyDateTime() {
-        return buyDateTime;
-    }
-
-    public void setBuyDateTime(Date buyDateTime) {
-        this.buyDateTime = buyDateTime;
     }
 
     public User getUser() {
