@@ -39,7 +39,7 @@ public class Facade {
         }
 
     }
-    
+
     public List<EventDTO> getRandomEvents(int numberOfEvents) {
         List<EventDTO> events = (List) getEvents();
         List<EventDTO> returnEvents = new ArrayList();
@@ -167,63 +167,78 @@ public class Facade {
 
         return dtos;
     }
-    
+
     //This method finds all the events within a certain area of a location
     //The Calculator is code that we found online which helps with calculating the distance between 2 location points.
-    
-    public List<EventDTO> getEventsByLocation(double latittude, double longitude, int distance){
+    public List<EventDTO> getEventsByLocation(double latittude, double longitude, int distance) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
         List<EventDTO> dto = new ArrayList();
         List<City> citiesToFindEventsFrom = new ArrayList();
         List<Event> finalEvents = new ArrayList();
-       try{
-        em.getTransaction().begin();
+        try {
+            em.getTransaction().begin();
             Query cityQuery = em.createQuery("SELECT r From City r");
             List<City> citylist = (List<City>) cityQuery.getResultList();
 
-       
-       citylist.forEach((city) -> {     
-           int res = Calculator.calculateDistance(latittude, longitude, city.getLattitude(), city.getLongitude());
-                if (res<distance) {
+            citylist.forEach((city) -> {
+                int res = Calculator.calculateDistance(latittude, longitude, city.getLattitude(), city.getLongitude());
+                if (res < distance) {
                     citiesToFindEventsFrom.add(city);
                 }
             });
-       citiesToFindEventsFrom.forEach((city) -> {
-           Query cityEventsQuery = em.createQuery("SELECT r FROM Event r WHERE r.city.id LIKE :id")
-                    .setParameter("id", city.getId());
-            try {
-                List<Event> localevent = (List<Event>) cityEventsQuery.getResultList();
-                finalEvents.addAll(localevent);
-            } catch (Exception e) {
-                System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
-            }
-       });
-       }finally{
-           em.close();
-       }
+            citiesToFindEventsFrom.forEach((city) -> {
+                Query cityEventsQuery = em.createQuery("SELECT r FROM Event r WHERE r.city.id LIKE :id")
+                        .setParameter("id", city.getId());
+                try {
+                    List<Event> localevent = (List<Event>) cityEventsQuery.getResultList();
+                    finalEvents.addAll(localevent);
+                } catch (Exception e) {
+                    System.out.println("stacktrace: " + e.getLocalizedMessage() + "\n");
+                }
+            });
+        } finally {
+            em.close();
+        }
 
-       finalEvents.forEach((event) -> {
-           dto.add(new EventDTO(event));
+        finalEvents.forEach((event) -> {
+            dto.add(new EventDTO(event));
         });
-        
+
         return dto;
     }
 
     public EventDTO getSpecificEvent(int id) {
         EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
-         
+
         Event e = new Event();
-        try{
-        em.getTransaction().begin();
-             Query query = em.createQuery("SELECT r FROM Event r WHERE r.id = :id")
+        try {
+            em.getTransaction().begin();
+            Query query = em.createQuery("SELECT r FROM Event r WHERE r.id = :id")
                     .setParameter("id", id);
             e = (Event) query.getSingleResult();
-       }finally{
-           em.close();
-       }
+        } finally {
+            em.close();
+        }
         return new EventDTO(e);
     }
-    
 
+    public List<EventDTO> getEventCollectionBySpecificDate(Date date) {
+        EntityManager em = PuSelector.getEntityManagerFactory("pu").createEntityManager();
+        List<Event> events;
+        long timeAdjuster = 24 * 60 * 60 * 1000;
+        try {
+            em.getTransaction().begin();
+            Query keywordQuery = em.createQuery("SELECT r FROM Event r WHERE r.startDate BETWEEN :startdate AND :enddate")
+                    .setParameter("startdate", date).setParameter("enddate", new Date(date.getTime() + timeAdjuster));
+            events = (List<Event>) keywordQuery.getResultList();
+        } finally {
+            em.close();
+        }
+        List<EventDTO> eventDTOList = new ArrayList();
+        events.stream().forEach(event -> {
+            eventDTOList.add(new EventDTO(event));
+        });
+        return eventDTOList;
+    }
 
 }
