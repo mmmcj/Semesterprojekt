@@ -14,6 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -100,7 +101,7 @@ public class EventResource {
         if (!eventCollectionBySpecificDate.isEmpty()) {
             return gson.toJson(eventCollectionBySpecificDate);
         } else {
-            return gson.toJson("No Occurences on Date.");
+            return gson.toJson(new ArrayList());
         }
 
     }
